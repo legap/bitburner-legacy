@@ -560,6 +560,7 @@ PlayerObject.prototype.calculatePercentMoneyHacked = function() {
     var difficultyMult = (100 - this.getCurrentServer().hackDifficulty) / 100;
     var skillMult = (this.hacking_skill - (this.getCurrentServer().requiredHackingSkill - 1)) / this.hacking_skill;
     var percentMoneyHacked = difficultyMult * skillMult * this.hacking_money_mult / 240;
+    console.log("Percent money hacked calculated to be: " + percentMoneyHacked);
     if (percentMoneyHacked < 0) {return 0;}
     if (percentMoneyHacked > 1) {return 1;}
     return percentMoneyHacked * __WEBPACK_IMPORTED_MODULE_1__BitNode_js__["a" /* BitNodeMultipliers */].ManualHackMoney;
@@ -581,6 +582,7 @@ PlayerObject.prototype.calculateExpGain = function() {
 //required hacking skill and that the player has admin rights.
 PlayerObject.prototype.hack = function() {
     this.actionTime = this.calculateHackingTime();
+    console.log("Hacking time: " + this.actionTime);
     this.startAction = true; //Set the startAction flag so the engine starts the hacking process
 }
 
@@ -605,7 +607,6 @@ PlayerObject.prototype.setMoney = function(money) {
 }
 
 PlayerObject.prototype.gainMoney = function(money) {
-    money *= 10;
     if (isNaN(money)) {
         console.log("ERR: NaN passed into Player.gainMoney()"); return;
     }
@@ -615,7 +616,6 @@ PlayerObject.prototype.gainMoney = function(money) {
 }
 
 PlayerObject.prototype.loseMoney = function(money) {
-    money = 0;
     if (isNaN(money)) {
         console.log("ERR: NaN passed into Player.loseMoney()"); return;
     }
@@ -623,7 +623,6 @@ PlayerObject.prototype.loseMoney = function(money) {
 }
 
 PlayerObject.prototype.gainHackingExp = function(exp) {
-    exp *= 10;
     if (isNaN(exp)) {
         console.log("ERR: NaN passed into Player.gainHackingExp()"); return;
     }
@@ -631,7 +630,6 @@ PlayerObject.prototype.gainHackingExp = function(exp) {
 }
 
 PlayerObject.prototype.gainStrengthExp = function(exp) {
-    exp *= 10;
     if (isNaN(exp)) {
         console.log("ERR: NaN passed into Player.gainStrengthExp()"); return;
     }
@@ -639,7 +637,6 @@ PlayerObject.prototype.gainStrengthExp = function(exp) {
 }
 
 PlayerObject.prototype.gainDefenseExp = function(exp) {
-    exp *= 10;
     if (isNaN(exp)) {
         console.log("ERR: NaN passed into player.gainDefenseExp()"); return;
     }
@@ -647,7 +644,6 @@ PlayerObject.prototype.gainDefenseExp = function(exp) {
 }
 
 PlayerObject.prototype.gainDexterityExp = function(exp) {
-    exp *= 10;
     if (isNaN(exp)) {
         console.log("ERR: NaN passed into Player.gainDexterityExp()"); return;
     }
@@ -655,7 +651,6 @@ PlayerObject.prototype.gainDexterityExp = function(exp) {
 }
 
 PlayerObject.prototype.gainAgilityExp = function(exp) {
-    exp *= 10;
     if (isNaN(exp)) {
         console.log("ERR: NaN passed into Player.gainAgilityExp()"); return;
     }
@@ -663,7 +658,6 @@ PlayerObject.prototype.gainAgilityExp = function(exp) {
 }
 
 PlayerObject.prototype.gainCharismaExp = function(exp) {
-    exp *= 10;
     if (isNaN(exp)) {
         console.log("ERR: NaN passed into Player.gainCharismaExp()"); return;
     }
@@ -671,7 +665,6 @@ PlayerObject.prototype.gainCharismaExp = function(exp) {
 }
 
 PlayerObject.prototype.gainIntelligenceExp = function(exp) {
-    exp *= 10;
     if (isNaN(exp)) {
         console.log("ERROR: NaN passed into Player.gainIntelligenceExp()"); return;
     }
@@ -685,6 +678,7 @@ PlayerObject.prototype.gainIntelligenceExp = function(exp) {
     if (hasBn || this.intelligence > 0) {
         this.intelligence_exp += exp;
     } else {
+        console.log("Not gaining intelligence experience bc it hasn't been unlocked yet");
     }
 }
 
@@ -810,7 +804,7 @@ PlayerObject.prototype.startWork = function() {
 }
 
 PlayerObject.prototype.work = function(numCycles) {
-    this.workRepGainRate    = this.getWorkRepGain()*10;
+    this.workRepGainRate    = this.getWorkRepGain();
 
     this.workHackExpGained  += this.workHackExpGainRate * numCycles;
     this.workStrExpGained   += this.workStrExpGainRate * numCycles;
@@ -1025,7 +1019,7 @@ PlayerObject.prototype.startFactionWork = function(faction) {
     if (isNaN(favorMult)) {favorMult = 1;}
     this.workRepGainRate *= favorMult;
     this.workRepGainRate *= __WEBPACK_IMPORTED_MODULE_1__BitNode_js__["a" /* BitNodeMultipliers */].FactionWorkRepGain;
-    this.workRepGainRate *= 10
+
     this.isWorking = true;
     this.workType = __WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].WorkTypeFaction;
     this.currentWorkFactionName = faction.name;
@@ -1047,7 +1041,7 @@ PlayerObject.prototype.startFactionHackWork = function(faction) {
     this.resetWorkStatus();
 
     this.workHackExpGainRate = .15 * this.hacking_exp_mult * __WEBPACK_IMPORTED_MODULE_1__BitNode_js__["a" /* BitNodeMultipliers */].FactionWorkExpGain;
-    this.workRepGainRate = this.workRepGainRate = 10*(this.hacking_skill + this.intelligence) / __WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel * this.faction_rep_mult;
+    this.workRepGainRate = this.workRepGainRate = (this.hacking_skill + this.intelligence) / __WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel * this.faction_rep_mult;
 
     this.factionWorkType = __WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].FactionWorkHacking;
     this.currentWorkFactionDescription = "carrying out hacking contracts";
@@ -1095,13 +1089,13 @@ PlayerObject.prototype.workForFaction = function(numCycles) {
     //Constantly update the rep gain rate
     switch (this.factionWorkType) {
         case __WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].FactionWorkHacking:
-            this.workRepGainRate = 10*(this.hacking_skill + this.intelligence) / __WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel * this.faction_rep_mult;
+            this.workRepGainRate = (this.hacking_skill + this.intelligence) / __WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].MaxSkillLevel * this.faction_rep_mult;
             break;
         case __WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].FactionWorkField:
-            this.workRepGainRate = 10*this.getFactionFieldWorkRepGain();
+            this.workRepGainRate = this.getFactionFieldWorkRepGain();
             break;
         case __WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].FactionWorkSecurity:
-            this.workRepGainRate = 10*this.getFactionSecurityWorkRepGain();
+            this.workRepGainRate = this.getFactionSecurityWorkRepGain();
             break;
         default:
             break;
@@ -1589,6 +1583,7 @@ PlayerObject.prototype.finishCrime = function(cancelled) {
                     this.gainIntelligenceExp(10 * __WEBPACK_IMPORTED_MODULE_3__Constants_js__["a" /* CONSTANTS */].IntelligenceCrimeBaseExpGain);
                     break;
                 default:
+                    console.log(this.crimeType);
                     Object(__WEBPACK_IMPORTED_MODULE_15__utils_DialogBox_js__["a" /* dialogBoxCreate */])("ERR: Unrecognized crime type. This is probably a bug please contact the developer");
                     return;
             }
@@ -1976,6 +1971,7 @@ PlayerObject.prototype.isQualified = function(company, position) {
 
 /********** Reapplying Augmentations and Source File ***********/
 PlayerObject.prototype.reapplyAllAugmentations = function(resetMultipliers=true) {
+    console.log("Re-applying augmentations");
     if (resetMultipliers) {
         this.resetMultipliers();
     }
@@ -2008,6 +2004,7 @@ PlayerObject.prototype.reapplyAllAugmentations = function(resetMultipliers=true)
 }
 
 PlayerObject.prototype.reapplyAllSourceFiles = function() {
+    console.log("Re-applying source files");
     //Will always be called after reapplyAllAugmentations() so multipliers do not have to be reset
     //this.resetMultipliers();
 
@@ -3965,6 +3962,7 @@ let Engine = {
     },
     currentPage:    null,
 
+
     //Time variables (milliseconds unix epoch time)
     _lastUpdate: new Date().getTime(),
     _idleSpeed: 200,    //Speed (in ms) at which the main loop is updated
@@ -4597,7 +4595,6 @@ let Engine = {
             }
         }
 
-        parent.postMessage(__WEBPACK_IMPORTED_MODULE_22__Player_js__["a"].sourceFiles.length > 0, "*")
         //Gang, if applicable
         if (__WEBPACK_IMPORTED_MODULE_22__Player_js__["a" /* Player */].bitNodeN == 2 && __WEBPACK_IMPORTED_MODULE_22__Player_js__["a" /* Player */].inGang()) {
             __WEBPACK_IMPORTED_MODULE_22__Player_js__["a" /* Player */].gang.process(numCycles);
@@ -4887,6 +4884,7 @@ let Engine = {
 
         //Load game from save or create new game
         if (Object(__WEBPACK_IMPORTED_MODULE_25__SaveObject_js__["a" /* loadGame */])(__WEBPACK_IMPORTED_MODULE_25__SaveObject_js__["b" /* saveObject */])) {
+            console.log("Loaded game from save");
             Object(__WEBPACK_IMPORTED_MODULE_8__BitNode_js__["d" /* initBitNodes */])();
             Object(__WEBPACK_IMPORTED_MODULE_8__BitNode_js__["c" /* initBitNodeMultipliers */])();
             Object(__WEBPACK_IMPORTED_MODULE_29__SourceFile_js__["d" /* initSourceFiles */])();
@@ -4902,6 +4900,7 @@ let Engine = {
             Object(__WEBPACK_IMPORTED_MODULE_17__Literature_js__["a" /* initLiterature */])();
             Object(__WEBPACK_IMPORTED_MODULE_20__NetscriptFunctions_js__["c" /* initSingularitySFFlags */])();
 
+            console.log(__WEBPACK_IMPORTED_MODULE_22__Player_js__["a" /* Player */].intelligence_exp);
 
             //Calculate the number of cycles have elapsed while offline
             Engine._lastUpdate = new Date().getTime();
@@ -4911,6 +4910,7 @@ let Engine = {
             /* Process offline progress */
             var offlineProductionFromScripts = Object(__WEBPACK_IMPORTED_MODULE_26__Script_js__["e" /* loadAllRunningScripts */])();    //This also takes care of offline production for those scripts
             if (__WEBPACK_IMPORTED_MODULE_22__Player_js__["a" /* Player */].isWorking) {
+                console.log("work() called in load() for " + numCyclesOffline * Engine._idleSpeed + " milliseconds");
                 if (__WEBPACK_IMPORTED_MODULE_22__Player_js__["a" /* Player */].workType == __WEBPACK_IMPORTED_MODULE_10__Constants_js__["a" /* CONSTANTS */].WorkTypeFaction) {
                     __WEBPACK_IMPORTED_MODULE_22__Player_js__["a" /* Player */].workForFaction(numCyclesOffline);
                 } else if (__WEBPACK_IMPORTED_MODULE_22__Player_js__["a" /* Player */].workType == __WEBPACK_IMPORTED_MODULE_10__Constants_js__["a" /* CONSTANTS */].WorkTypeCreateProgram) {
@@ -4967,6 +4967,7 @@ let Engine = {
             Engine.closeMainMenuHeader(visibleMenuTabs);
         } else {
             //No save found, start new game
+            console.log("Initializing new game");
             Object(__WEBPACK_IMPORTED_MODULE_8__BitNode_js__["d" /* initBitNodes */])();
             Object(__WEBPACK_IMPORTED_MODULE_8__BitNode_js__["c" /* initBitNodeMultipliers */])();
             Object(__WEBPACK_IMPORTED_MODULE_29__SourceFile_js__["d" /* initSourceFiles */])();
@@ -5400,6 +5401,7 @@ let Engine = {
 
         //DEBUG Delete active Scripts on home
         document.getElementById("debug-delete-scripts-link").addEventListener("click", function() {
+            console.log("Deleting running scripts on home computer");
             __WEBPACK_IMPORTED_MODULE_22__Player_js__["a" /* Player */].getHomeComputer().runningScripts = [];
             Object(__WEBPACK_IMPORTED_MODULE_0__utils_DialogBox_js__["a" /* dialogBoxCreate */])("Forcefully deleted all running scripts on home computer. Please save and refresh page");
             Object(__WEBPACK_IMPORTED_MODULE_1__utils_GameOptions_js__["a" /* gameOptionsBoxClose */])();
@@ -6181,6 +6183,9 @@ function SizeOfAllServers() {
 function AddToAllServers(server) {
     var serverIp = server.ip;
     if (Object(__WEBPACK_IMPORTED_MODULE_7__utils_IPAddress_js__["b" /* ipExists */])(serverIp)) {
+        console.log("IP of server that's being added: " + serverIp);
+        console.log("Hostname of the server thats being added: " + server.hostname);
+        console.log("The server that already has this IP is: " + AllServers[serverIp].hostname);
         throw new Error("Error: Trying to add a server with an existing IP");
         return;
     }
@@ -6213,6 +6218,7 @@ function getServer(s) {
 function PrintAllServers() {
     for (var ip in AllServers) {
         if (AllServers.hasOwnProperty(ip)) {
+            console.log("Ip: " + ip + ", hostname: " + AllServers[ip].hostname);
         }
     }
 }
@@ -24557,7 +24563,6 @@ function updateTerminalScroll() {
 
 function postNetburnerText() {
 	post("Bitburner v" + __WEBPACK_IMPORTED_MODULE_1__Constants_js__["a" /* CONSTANTS */].Version);
-    post("Do not report anything in here as a bug or suggest changes, they will be ignored."); //couldn't figure out how to print this out only once
 }
 
 //Defines key commands in terminal
