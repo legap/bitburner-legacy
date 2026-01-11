@@ -37,7 +37,6 @@ import {makeRuntimeRejectMsg, netscriptDelay, runScriptFromScript,
         scriptCalculateGrowTime, scriptCalculateWeakenTime} from "./NetscriptEvaluator.js";
 import {Environment}                                from "./NetscriptEnvironment.js";
 
-import Decimal                                      from '../utils/decimal.js';
 import {dialogBoxCreate}                            from "../utils/DialogBox.js";
 import {printArray, powerOfTwo}                     from "../utils/HelperFunctions.js";
 import {createRandomIp}                             from "../utils/IPAddress.js";

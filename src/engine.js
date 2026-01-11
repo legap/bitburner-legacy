@@ -1,7 +1,8 @@
+import $ from "jquery";
 import {dialogBoxCreate}                        from "../utils/DialogBox.js";
 import {gameOptionsBoxOpen, gameOptionsBoxClose}from "../utils/GameOptions.js";
 import {clearEventListeners}                    from "../utils/HelperFunctions.js";
-import numeral                                  from "../utils/numeral.min.js";
+import numeral                                  from "numeral";
 import {formatNumber,
         convertTimeMsToTimeElapsedString}       from "../utils/StringHelperFunctions.js";
 import {loxBoxCreate, logBoxUpdateText,

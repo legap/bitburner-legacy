@@ -1,4 +1,4 @@
-/* GameOptions.js */
+import $ from "jquery";
 
 //Close box when clicking outside
 $(document).click(function(event) {

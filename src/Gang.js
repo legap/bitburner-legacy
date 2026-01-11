@@ -1,3 +1,4 @@
+import $ from "jquery";
 import {CONSTANTS}                              from "./Constants.js";
 import {Engine}                                 from "./engine.js";
 import {Faction, Factions}                      from "./Faction.js";
@@ -7,7 +8,7 @@ import {dialogBoxCreate}                        from "../utils/DialogBox.js";
 import {Reviver, Generic_toJSON,
         Generic_fromJSON}                       from "../utils/JSONReviver.js";
 import {getRandomInt}                           from "../utils/HelperFunctions.js";
-import  numeral                                 from "../utils/numeral.min.js";
+import  numeral                                 from "numeral";
 import {formatNumber}                           from "../utils/StringHelperFunctions.js";
 import {yesNoBoxCreate, yesNoTxtInpBoxCreate,
         yesNoBoxGetYesButton, yesNoBoxGetNoButton,

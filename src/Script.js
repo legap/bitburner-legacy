@@ -1,17 +1,27 @@
-var ace = require('brace');
-require('brace/mode/javascript');
-require('brace/mode/netscript');
-require('brace/theme/chaos');
-require('brace/theme/chrome');
-require('brace/theme/monokai');
-require('brace/theme/solarized_dark');
-require('brace/theme/solarized_light');
-require('brace/theme/terminal');
-require('brace/theme/twilight');
-require('brace/theme/xcode');
-require("brace/keybinding/vim");
-require("brace/keybinding/emacs");
-require("brace/ext/language_tools");
+import $ from "jquery";
+
+// --- ACE EDITOR (modern ES module imports) ---
+import ace from "ace-builds/src-noconflict/ace";
+
+// Modes
+import "ace-builds/src-noconflict/mode-javascript";
+
+// Themes
+import "ace-builds/src-noconflict/theme-chaos";
+import "ace-builds/src-noconflict/theme-chrome";
+import "ace-builds/src-noconflict/theme-monokai";
+import "ace-builds/src-noconflict/theme-solarized_dark";
+import "ace-builds/src-noconflict/theme-solarized_light";
+import "ace-builds/src-noconflict/theme-terminal";
+import "ace-builds/src-noconflict/theme-twilight";
+import "ace-builds/src-noconflict/theme-xcode";
+
+// Keybindings
+import "ace-builds/src-noconflict/keybinding-vim";
+import "ace-builds/src-noconflict/keybinding-emacs";
+
+// Extensions
+import "ace-builds/src-noconflict/ext-language_tools";
 
 import {CONSTANTS}                              from "./Constants.js";
 import {Engine}                                 from "./engine.js";
@@ -30,6 +40,13 @@ import {compareArrays}                          from "../utils/HelperFunctions.j
 import {formatNumber, numOccurrences,
         numNetscriptOperators}                  from "../utils/StringHelperFunctions.js";
 
+// Tell ACE where to load workers from
+ace.config.set("basePath", "/ace");
+ace.config.set("workerPath", "/ace");
+ace.config.set("modePath", "/ace");
+ace.config.set("themePath", "/ace");
+
+
 var keybindings = {
     ace: null,
     vim: "ace/keyboard/vim",
@@ -47,7 +64,7 @@ function scriptEditorInit() {
 
     //Initialize ACE Script editor
     var editor = ace.edit('javascript-editor');
-    editor.getSession().setMode('ace/mode/netscript');
+    editor.getSession().setMode('ace/mode/javascript');
     editor.setTheme('ace/theme/monokai');
     document.getElementById('javascript-editor').style.fontSize='16px';
     editor.setOption("showPrintMargin", false);

@@ -1,3 +1,4 @@
+import $ from "jquery";
 import {CONSTANTS}                                  from "./Constants.js";
 import {Engine}                                     from "./engine.js";
 import {displayFactionContent}                      from "./Faction.js";
@@ -7,7 +8,7 @@ import {addOffset, getRandomInt,
         clearEventListenersEl,
         clearEventListeners}                        from "../utils/HelperFunctions.js";
 import {formatNumber, isString}                     from "../utils/StringHelperFunctions.js";
-import jsplumb                                      from 'jsplumb'
+import jsPlumb                                      from "jsplumb"
 
 let inMission = false; //Flag to denote whether a mission is running
 let currMission = null;

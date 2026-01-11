@@ -8,7 +8,7 @@ import {evaluate, isScriptErrorMessage}     from "./NetscriptEvaluator.js";
 import {AllServers}                         from "./Server.js";
 import {Settings}                           from "./Settings.js";
 
-import {parse}                              from "../utils/acorn.js";
+import {parse}                              from "acorn";
 import {dialogBoxCreate}                    from "../utils/DialogBox.js";
 import {compareArrays, printArray}          from "../utils/HelperFunctions.js";
 

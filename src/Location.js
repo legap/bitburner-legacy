@@ -22,7 +22,7 @@ import {SpecialServerNames, SpecialServerIps}   from "./SpecialServerIps.js";
 import {dialogBoxCreate}                        from "../utils/DialogBox.js";
 import {clearEventListeners}                    from "../utils/HelperFunctions.js";
 import {createRandomIp}                         from "../utils/IPAddress.js";
-import numeral                                  from "../utils/numeral.min.js";
+import numeral                                  from "numeral";
 import {formatNumber}                           from "../utils/StringHelperFunctions.js";
 import {yesNoBoxCreate, yesNoTxtInpBoxCreate,
         yesNoBoxGetYesButton, yesNoBoxGetNoButton,

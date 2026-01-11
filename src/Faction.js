@@ -1,3 +1,4 @@
+import $ from "jquery";
 import {Augmentations, AugmentationNames,
         PlayerOwnedAugmentation}                from "./Augmentations.js";
 import {BitNodeMultipliers}                     from "./BitNode.js";

@@ -1,3 +1,4 @@
+import $ from "jquery";
 import {printArray}                     from "./HelperFunctions.js";
 
 $(document).keydown(function(event) {

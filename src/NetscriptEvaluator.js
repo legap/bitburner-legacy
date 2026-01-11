@@ -8,7 +8,7 @@ import {Settings}                           from "./Settings.js";
 import {Script, findRunningScript,
         RunningScript}                      from "./Script.js";
 
-import {Node}                               from "../utils/acorn.js";
+import {Node}                               from "acorn";
 import {printArray}                         from "../utils/HelperFunctions.js";
 import {isValidIPAddress}                   from "../utils/IPAddress.js";
 import {isString}                           from "../utils/StringHelperFunctions.js";
