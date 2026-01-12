@@ -1,0 +1,68 @@
+function findIt(parent, sv, target, route) {
+    children = scan(sv);
+
+    i = 0;
+    while (i < children.length) {
+        child = children[i];
+
+        if (child === parent) {
+            i = i + 1;
+            continue;
+        }
+
+        if (child === target) {
+            route.unshift(child);
+            route.unshift(sv);
+            return true;
+        }
+
+        if (findIt(sv, child, target, route)) {
+            route.unshift(sv);
+            return true;
+        }
+
+        i = i + 1;
+    }
+
+    return false;
+}
+
+function autoConnect(route) {
+    cmd = "";
+    i = 0;
+    while (i < route.length) {
+        if (cmd === "") {
+            cmd = "connect " + route[i];
+        } else {
+            cmd = cmd + "; connect " + route[i];
+        }
+        i = i + 1;
+    }
+
+    tprint(cmd);
+    print(cmd);
+}
+
+
+// ---------------------------
+// Top‑level script execution
+// ---------------------------
+
+server = args[0];
+route = [];   // allowed: assignment, not declaration
+
+if (!serverExists(server)) {
+    format = "Server %s does not exist!";
+    tprintf(format, server);
+    printf(format, server);
+} else {
+    findIt("", "home", server, route);
+
+    // If route is empty, no path was found
+    if (route.length === 0) {
+        tprint("No route found to " + server);
+        print("No route found to " + server);
+    } else {
+        autoConnect(route);
+    }
+}

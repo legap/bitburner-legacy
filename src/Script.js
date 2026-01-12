@@ -225,7 +225,7 @@ function Script() {
     this.code       = "";
     this.ramUsage   = 0;
 	this.server 	= "";	//IP of server this script is on
-};
+}
 
 //Get the script data from the Script Editor and save it to the object
 Script.prototype.saveScript = function() {
