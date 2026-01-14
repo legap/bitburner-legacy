@@ -18,7 +18,7 @@ To get the achievement you need to beat BN1 in the legacy version of bitburner.
 ## The deeper look
 
 The version from the arcade is also deployed [online](https://bitburner-official.github.io/bitburner-legacy/).
-I had a look at the [sourcecode](https://github.com/legap/bitburner-legacy) and found the 
+I had a look at the [sourcecode](https://github.com/bitburner-official/bitburner-legacy) and found the 
 [commit hash](https://github.com/bitburner-official/bitburner-legacy/blob/master/commit) it is based on. 
 
 With the commit hash I then downloaded the 
